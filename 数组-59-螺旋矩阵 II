@@ -1,0 +1,55 @@
+# 59. 螺旋矩阵 II
+
+> 旋转矩阵，个人认为最容易理解，不会写错的写法。
+> 定义 top（上边界），down（下边界），left（左边界），right（右边界） 来向内收缩
+
+````js
+    var generateMatrix = function(n) {
+
+        let res = new Array(n).fill(0).map(() => new Array(n).fill(0));
+
+        let top = 0 
+        let buttom = n-1 
+        let left = 0 
+        let right = n-1 
+        
+        let add = 0
+        let len = n
+        let cur = 1 
+        let loop = Math.floor(len/2)
+        
+        while(add < loop){
+            // left -> right 
+            for(let i = left; i< right; i++){
+                res[top][i] = cur
+                cur ++ 
+            }
+
+            // top -> down
+            for(let i = top; i< right; i++){
+                res[i][right] = cur
+                cur ++ 
+            }
+            
+            // right -> left
+            for(let i = right; i >left; i--){
+                res[buttom][i] = cur
+                cur ++ 
+            }
+
+            // bottom -> top
+            for(let i = buttom; i > top; i--){
+                res[i][left] = cur
+                cur ++ 
+            }
+            add++ 
+            top ++ 
+            left ++ 
+            right -- 
+            buttom -- 
+        }
+        if (n % 2 == 1)
+            res[add][add] = cur
+        return res
+    };
+```

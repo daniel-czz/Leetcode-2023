@@ -1,0 +1,71 @@
+# 数组 - 209. 长度最小的子数组
+题目： https://leetcode.cn/problems/minimum-size-subarray-sum/description/
+题解： https://programmercarl.com/0209.长度最小的子数组.html#其他语言版本
+
+### 暴力题解
+    > 两层for循环，for loop第一层，选择起始点。for loop第二层，从该起始点向后遍历，计算所有的区间，直到结尾。
+
+### 双指针（一个for loop做两个for loop的事情）
+    > right记录结束位置，left记录开始位置。right一次向后遍历，当 curSum 符合条件后，开始移动left缩减curSum，直到curSum 小于 target。
+
+
+```js
+    //暴力解
+    var minSubArrayLen = function(target, nums) {
+        let len = Number.POSITIVE_INFINITY
+        for(let i=0; i< nums.length; i++){
+            let cur = 0
+            for(let j = i; j<nums.length; j++){
+                cur = cur + nums[j]
+                if(cur >= target){
+                    len = Math.min(len, j-i+1)
+                }
+            }
+        }
+
+        return len == Number.POSITIVE_INFINITY? 0 : len
+    };
+
+    ----------------------------------------------------
+    //滑动窗口 - for
+    var minSubArrayLen = function(target, nums) {
+        let left = 0
+        let len = Infinity
+        let curSum = 0
+        
+        for(let right=0; right<nums.length; right++){
+            curSum += nums[right]
+
+            while(curSum >= target){
+                len = Math.min(len, right-left+1)
+                curSum -= nums[left]
+                left++
+            }
+        }
+
+        return len == Infinity? 0 : len
+    };
+
+    --------------------------------------------------
+    //滑动窗口 - for
+    var minSubArrayLen = function(target, nums) {
+        let left = 0
+        let right = 0
+        let len = Infinity
+        let curSum = 0
+        
+        while( right < nums.length){
+            while(curSum < target){
+                curSum += nums[right]
+                right ++
+            }
+            while( curSum >= target){
+                len = Math.min(len, right-left)
+                curSum -= nums[left]
+                left++
+            }
+        }
+
+        return len == Infinity? 0 : len
+    };
+```
