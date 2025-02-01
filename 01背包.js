@@ -23,24 +23,19 @@
 
 // test();
 
-function testWeightBagProblem(wight, value, size) {
-    const len = wight.length, 
-      dp = Array(size + 1).fill(0);
-    for(let i = 1; i <= len; i++) {
-      for(let j = size; j >= 0; j--) {
-        if(j < wight[i - 1]) {
-            dp[j] = dp[j];  
-        }else if(j >= wight[i - 1]) {
-          dp[j] = Math.max(dp[j], value[i - 1] + dp[j - wight[i - 1]]);
-        }
+function dpF (items, price, bagSize) {
+  let dp = new Array(bagSize+1).fill(0)
+
+  for(let i = 0; i < items.length; i++ ) { // 物品 0 1 2 3 
+    for( let j = bagSize; j >= 1; j--) { // 从后向前便利 
+      if(j >= items[i]){
+        dp[j] = Math.max(dp[j], dp[j - items[i]] + price[i])
+      }else{
+        dp[j] = dp[j]
       }
     }
-    return dp[size];
   }
-  
-  
-  function test () {
-    console.log(testWeightBagProblem([1, 3, 4, 5], [15, 20, 30, 55], 6));
-  }
-  
-  test();
+  console.table(dp)
+}
+
+dpF([1,3,4], [15, 20, 30], 4)
