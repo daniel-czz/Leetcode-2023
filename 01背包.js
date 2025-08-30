@@ -1,4 +1,4 @@
-// // 二维解法
+// // 二维解法 111
 // function testSizeBagProblem (size, value, bagSize) {
 //     let len = size.length;
 //     let dp = new Array(len).fill(0).map( () => new Array(bagSize + 1).fill(0))
